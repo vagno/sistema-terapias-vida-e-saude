@@ -20,25 +20,35 @@ CREATE TABLE tab_agenda (
     comparecimento char,
     anotacoes varchar(200),
     id_cpf varchar(20),
-    valor varchar(10),
+    valor double,
     hora time,
     data date,
     PRIMARY KEY (id_cpf, hora, data)
 );
 
-CREATE TABLE clientes_agenda (
-    fk_tab_clientes_cpf varchar(20),
+CREATE TABLE gastos (
+    tag varchar(15),
+    descricao varchar(200),
+    valor double,
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    fornecedor varchar(100)
+);
+
+CREATE TABLE clientes_agenda_tab_agenda_tab_clientes_gastos (
     fk_tab_agenda_id_cpf varchar(20),
     fk_tab_agenda_hora time,
-    fk_tab_agenda_data date
+    fk_tab_agenda_data date,
+    fk_tab_clientes_cpf varchar(20)
 );
  
-ALTER TABLE clientes_agenda ADD CONSTRAINT FK_clientes_agenda_1
-    FOREIGN KEY (fk_tab_clientes_cpf)
-    REFERENCES tab_clientes (cpf)
-    ON DELETE SET NULL;
- 
-ALTER TABLE clientes_agenda ADD CONSTRAINT FK_clientes_agenda_2
+ALTER TABLE clientes_agenda_tab_agenda_tab_clientes_gastos ADD CONSTRAINT FK_clientes_agenda_tab_agenda_tab_clientes_gastos_1
     FOREIGN KEY (fk_tab_agenda_id_cpf, fk_tab_agenda_hora, fk_tab_agenda_data)
     REFERENCES tab_agenda (id_cpf, hora, data)
-    ON DELETE SET NULL;
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE clientes_agenda_tab_agenda_tab_clientes_gastos ADD CONSTRAINT FK_clientes_agenda_tab_agenda_tab_clientes_gastos_2
+    FOREIGN KEY (fk_tab_clientes_cpf)
+    REFERENCES tab_clientes (cpf)
+    ON DELETE NO ACTION;
+
+
